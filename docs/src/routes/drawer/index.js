@@ -6,6 +6,8 @@ import Drawer from "preact-material-components/Drawer";
 import Button from "preact-material-components/Button";
 import List from "preact-material-components/List";
 
+import "./style";
+
 // Components
 import ComponentTable from "../../components/component-table";
 import CodeBlock from "../../components/code-block";
@@ -64,6 +66,9 @@ export default class DrawerPage extends Component {
         description: "Fired when the drawer is closed."
       }
     ];
+    this.state = {
+      drawerOpened: false
+    };
   }
   render() {
     return (
@@ -92,15 +97,20 @@ export default class DrawerPage extends Component {
           primary={true}
           raised={true}
           onClick={() => {
-            this.drawer.MDComponent.open = !this.drawer.MDComponent.open;
+            this.setState({
+              drawerOpened: !this.state.drawerOpened
+            });
           }}
         >
           Toggle Drawer
         </Button>
         <div className="demo-drawer">
           <Drawer.TemporaryDrawer
-            ref={drawer => {
-              this.drawer = drawer;
+            open={this.state.drawerOpened}
+            onClose={() => {
+              this.setState({
+                drawerOpened: false
+              });
             }}
           >
             <Drawer.TemporaryDrawerHeader className="mdc-theme--primary-bg">
